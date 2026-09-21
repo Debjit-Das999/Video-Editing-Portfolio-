@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   Theme tokens — minimal & light.
+   Tweak these few values to re-skin the whole site.
+---------------------------------------------------------------------------- */
+@theme {
+  --color-bg: #fbfbf9; /* near-white page background */
+  --color-surface: #ffffff; /* cards / panels */
+  --color-ink: #18181b; /* near-black primary text */
+  --color-muted: #6b7280; /* secondary text */
+  --color-line: #e7e7e2; /* hairline borders */
+  --color-accent: #c2410c; /* restrained warm accent (links, buttons) */
+  --color-accent-soft: #fff1ea; /* accent tint for chips/hover */
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 14px;
+
+  /* Wide-screen breakpoints (rem in media queries is anchored to 16px,
+     so these stay fixed even though the root font-size scales below).
+     3xl = 1920px (1080p/1200p), 4xl = 2560px (1440p), 5xl = 3840px (4K). */
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 160rem;
+  --breakpoint-5xl: 240rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+---------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* offset for the sticky header on anchor jumps */
+}
+
+/* Scale the whole design up on large/high-resolution displays. Everything is
+   sized in rem, so nudging the root font-size proportionally grows type,
+   spacing, and container widths together — keeping the layout legible (not a
+   tiny column) on 1440p and 4K screens. */
+@media (min-width: 1920px) {
+  html { font-size: 17px; }
+}
+@media (min-width: 2560px) {
+  html { font-size: 18px; }
+}
+@media (min-width: 3840px) {
+  html { font-size: 20px; }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
+
+/* Accessible focus ring */
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Constrain the lite-youtube facade to a nice 16:9 with rounded corners */
+.lyt-radius {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
