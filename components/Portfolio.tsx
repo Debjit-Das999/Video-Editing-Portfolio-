@@ -4,41 +4,49 @@ import { useState } from "react";
 import { content } from "@/data/content";
 import { VideoCard } from "@/components/VideoCard";
 
+const FEATURED = "Featured";
+const ALL = "All";
+
 export function Portfolio() {
   const { categories, projects } = content;
-  const [active, setActive] = useState(categories[0]);
+  // Tab order: Featured first, then the real categories, then All last.
+  const tabs = [FEATURED, ...categories, ALL];
+  const [active, setActive] = useState(FEATURED);
 
   const filtered =
-    active === categories[0]
+    active === ALL
       ? projects
-      : projects.filter((p) => p.category === active);
+      : active === FEATURED
+        ? projects.filter((p) => p.featured)
+        : projects.filter((p) => p.category === active);
 
   return (
-    <section
-      id="work"
-      className="scroll-mt-20 border-t border-[var(--color-line)] bg-[var(--color-surface)] py-16 sm:py-24"
-    >
-      <div className="mx-auto max-w-5xl px-5 2xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-[100rem]">
-        <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Selected work
+    <section id="work" className="relative scroll-mt-20 overflow-hidden py-16 sm:py-24">
+      <div className="glow glow-gold-soft" style={{ top: "8rem", right: "-10rem", width: "32rem", height: "32rem" }} />
+
+      <div className="shell relative z-10">
+        <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+          <div className="max-w-2xl">
+            <span className="eyebrow"><span className="dot" />Portfolio</span>
+            <h2 className="display mt-5 text-3xl sm:text-5xl">
+              Featured <span className="text-gold">work</span>
             </h2>
-            <p className="mt-2 text-[var(--color-muted)]">
-              A few recent edits. Click any thumbnail to play.
+            <p className="mt-3 text-lg text-[var(--color-muted)]">
+              Top edits from The AI Architects (Tom Crawshaw) channel. Click any
+              thumbnail to play.
             </p>
           </div>
 
           {/* Category filter tabs */}
           <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
+            {tabs.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
-                className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
                   active === cat
-                    ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
-                    : "border-[var(--color-line)] text-[var(--color-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]"
+                    ? "border-transparent bg-gradient-to-br from-[#facc15] to-[#f59e0b] text-[#1a1200]"
+                    : "border-[var(--color-line)] text-[var(--color-muted)] hover:border-[var(--color-gold)] hover:text-[var(--color-ink)]"
                 }`}
               >
                 {cat}

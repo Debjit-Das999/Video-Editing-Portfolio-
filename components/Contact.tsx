@@ -4,32 +4,47 @@ import { Calendly } from "@/components/Calendly";
 export function Contact() {
   const { email, calendlyUrl } = content.profile;
 
+  // Theme the inline Calendly widget to match the dark/gold look.
+  const themedCalendly = `${calendlyUrl}?hide_gdpr_banner=1&background_color=0d0d0d&text_color=ffffff&primary_color=facc15`;
+
   return (
     <section
       id="contact"
-      className="mx-auto max-w-5xl scroll-mt-20 px-5 py-16 sm:py-24 2xl:max-w-6xl 3xl:max-w-7xl"
+      className="relative scroll-mt-20 overflow-hidden border-t border-[var(--color-line)] py-16 sm:py-24"
     >
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          Let&rsquo;s work together
-        </h2>
-        <p className="mt-4 text-lg leading-relaxed text-[var(--color-muted)]">
-          Have footage that needs a great edit? Pick a time that works for you
-          and book a free 30-minute call below.
-        </p>
-        <p className="mt-3 text-sm text-[var(--color-muted)]">
-          Prefer email?{" "}
-          <a
-            href={`mailto:${email}`}
-            className="font-medium text-[var(--color-accent)] underline-offset-4 hover:underline"
-          >
-            {email}
-          </a>
-        </p>
-      </div>
+      <div className="glow glow-gold" style={{ top: "-6rem", left: "50%", transform: "translateX(-50%)", width: "48rem", height: "26rem" }} />
 
-      <div className="mx-auto mt-10 max-w-3xl 3xl:max-w-4xl">
-        <Calendly url={calendlyUrl} />
+      <div className="shell relative z-10">
+        <div className="mx-auto max-w-3xl text-center" data-reveal>
+          <span className="eyebrow"><span className="dot" />Let&rsquo;s talk</span>
+          <h2 className="display mt-5 text-3xl sm:text-5xl">
+            Let&rsquo;s make your next video
+            <br />
+            <span className="text-gold">impossible to scroll past.</span>
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-[var(--color-muted)]">
+            Book a free 30-minute call, or send your footage straight to my
+            inbox.
+          </p>
+
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <a
+              href={calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
+              Book A Call
+            </a>
+            <a href={`mailto:${email}`} className="btn-ghost">
+              {email}
+            </a>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-12 max-w-3xl 3xl:max-w-4xl" data-reveal>
+          <Calendly url={themedCalendly} />
+        </div>
       </div>
     </section>
   );

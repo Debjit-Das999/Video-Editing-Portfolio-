@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------------
-   Theme tokens — minimal & light.
-   Tweak these few values to re-skin the whole site.
+   Theme tokens — dark & gold (ZOU style).
+   Near-black canvas, gold accent, hairline white borders.
 ---------------------------------------------------------------------------- */
 @theme {
-  --color-bg: #fbfbf9; /* near-white page background */
-  --color-surface: #ffffff; /* cards / panels */
-  --color-ink: #18181b; /* near-black primary text */
-  --color-muted: #6b7280; /* secondary text */
-  --color-line: #e7e7e2; /* hairline borders */
-  --color-accent: #c2410c; /* restrained warm accent (links, buttons) */
-  --color-accent-soft: #fff1ea; /* accent tint for chips/hover */
+  --color-bg: #050505; /* near-black page background */
+  --color-surface: #0d0d0d; /* slightly raised bands */
+  --color-card: #111111; /* cards / panels */
+  --color-ink: #ffffff; /* primary text */
+  --color-muted: #a1a1aa; /* secondary text */
+  --color-faint: #71717a; /* tertiary text */
+  --color-line: rgba(255, 255, 255, 0.08); /* hairline borders */
+  --color-gold: #facc15; /* primary gold accent */
+  --color-gold2: #f59e0b; /* deep gold for gradients */
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-card: 14px;
+  --radius-card: 16px;
 
-  /* Wide-screen breakpoints (rem in media queries is anchored to 16px,
-     so these stay fixed even though the root font-size scales below).
-     3xl = 1920px (1080p/1200p), 4xl = 2560px (1440p), 5xl = 3840px (4K). */
+  /* Wide-screen breakpoints (rem anchored to 16px in media queries). */
   --breakpoint-3xl: 120rem;
   --breakpoint-4xl: 160rem;
   --breakpoint-5xl: 240rem;
@@ -30,22 +30,13 @@
 ---------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem; /* offset for the sticky header on anchor jumps */
+  scroll-padding-top: 5rem;
+  background: var(--color-bg);
 }
 
-/* Scale the whole design up on large/high-resolution displays. Everything is
-   sized in rem, so nudging the root font-size proportionally grows type,
-   spacing, and container widths together — keeping the layout legible (not a
-   tiny column) on 1440p and 4K screens. */
-@media (min-width: 1920px) {
-  html { font-size: 17px; }
-}
-@media (min-width: 2560px) {
-  html { font-size: 18px; }
-}
-@media (min-width: 3840px) {
-  html { font-size: 20px; }
-}
+@media (min-width: 1920px) { html { font-size: 17px; } }
+@media (min-width: 2560px) { html { font-size: 18px; } }
+@media (min-width: 3840px) { html { font-size: 20px; } }
 
 body {
   background: var(--color-bg);
@@ -53,21 +44,224 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-accent-soft);
+  background: rgba(250, 204, 21, 0.25);
 }
 
-/* Accessible focus ring */
 :where(a, button, input, textarea):focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-gold);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Constrain the lite-youtube facade to a nice 16:9 with rounded corners */
 .lyt-radius {
   border-radius: var(--radius-card);
   overflow: hidden;
+}
+
+/* ----------------------------------------------------------------------------
+   Shared layout helpers
+---------------------------------------------------------------------------- */
+.shell {
+  position: relative;
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 1920px) { .shell { max-width: 78rem; } }
+@media (min-width: 2560px) { .shell { max-width: 86rem; } }
+
+/* Oversized display headline — tight, heavy. */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+/* ----------------------------------------------------------------------------
+   ZOU effects: gold gradient text, glow orbs, shimmer, buttons
+---------------------------------------------------------------------------- */
+
+/* Gold gradient applied to text. */
+.text-gold {
+  background: linear-gradient(135deg, #facc15 0%, #f59e0b 50%, #d4820a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft blurred radial glow — place absolutely behind content. */
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-gold {
+  background: radial-gradient(ellipse, rgba(250, 204, 21, 0.22), transparent 70%);
+}
+.glow-gold-soft {
+  background: radial-gradient(ellipse, rgba(250, 204, 21, 0.1) 0%, transparent 70%);
+}
+
+/* Thin shimmering divider line. */
+.shimmer-line {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.5), transparent);
+}
+
+/* Gold pill button. */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #facc15, #f59e0b);
+  color: #1a1200;
+  font-weight: 700;
+  padding: 0.95rem 1.75rem;
+  font-size: 0.875rem;
+  box-shadow: 0 0 40px rgba(250, 204, 21, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 60px rgba(250, 204, 21, 0.45);
+}
+
+/* Ghost (outlined) button on dark. */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-ink);
+  font-weight: 600;
+  padding: 0.95rem 1.75rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--color-gold);
+  background: rgba(250, 204, 21, 0.06);
+}
+
+/* Card with gold glow on hover. */
+.card-glow {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-glow:hover {
+  transform: translateY(-4px);
+  border-color: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 0 80px rgba(250, 204, 21, 0.08), 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Eyebrow badge (gold dot + uppercase label). */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line);
+  background: rgba(250, 204, 21, 0.04);
+  padding: 0.4rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+.eyebrow .dot {
+  height: 0.4rem;
+  width: 0.4rem;
+  border-radius: 9999px;
+  background: var(--color-gold);
+  box-shadow: 0 0 8px var(--color-gold);
+}
+/* Green "available" status dot with a gentle live pulse. */
+.eyebrow .dot-green {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ----------------------------------------------------------------------------
+   Marquee ticker
+---------------------------------------------------------------------------- */
+.ticker {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.ticker-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 3rem;
+  padding-right: 3rem;
+  animation: ticker 28s linear infinite;
+}
+
+/* ----------------------------------------------------------------------------
+   Animations
+---------------------------------------------------------------------------- */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* Hero load-in: stagger via inline delay where used. */
+.rise {
+  opacity: 0;
+  animation: slideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scroll-reveal (driven by ScrollReveal client component). */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+[data-reveal] {
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Higher specificity than `html.reveal-ready [data-reveal]` so the revealed
+   state actually wins and elements fade in. */
+html.reveal-ready [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .animate-float, .ticker-track { animation: none; opacity: 1; }
+  .rise { opacity: 1; }
+  html.reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }

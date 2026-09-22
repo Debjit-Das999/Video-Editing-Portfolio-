@@ -26,11 +26,15 @@ export interface Showreel {
 export interface Project {
   id: string;
   title: string;
-  /** Must match one of the categories below (besides "All"). */
+  /** Must match one of the categories below. */
   category: string;
   /** YouTube video ID only. */
   youtubeId: string;
   description: string;
+  /** Total view count — used for the Impact counter/graph and "most viewed". */
+  views?: number;
+  /** Show in the "Featured" tab (the default tab in Selected work). */
+  featured?: boolean;
 }
 
 export interface Testimonial {
@@ -39,10 +43,35 @@ export interface Testimonial {
   role: string;
 }
 
+/** A big headline number shown in the Stats band. */
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+/** A numbered service shown in the Services list. */
+export interface Service {
+  title: string;
+  description: string;
+}
+
+/** A real screenshot of client feedback (Slack/DM/etc.) for the Reviews section. */
+export interface ReviewImage {
+  /** Path under /public, e.g. "/reviews/review-1.png". */
+  src: string;
+  alt: string;
+}
+
 export interface SiteContent {
   profile: Profile;
   showreel: Showreel;
+  /** Big-number stats band under the hero. */
+  stats: Stat[];
+  /** Numbered list of what you do. */
+  services: Service[];
   categories: string[];
   projects: Project[];
   testimonials: Testimonial[];
+  /** Screenshot reviews. When present, they replace the written testimonials. */
+  reviewImages?: ReviewImage[];
 }

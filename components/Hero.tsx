@@ -1,40 +1,44 @@
 import { content } from "@/data/content";
 
 export function Hero() {
-  const { name, tagline, intro } = content.profile;
+  const { intro } = content.profile;
 
   return (
-    <section
-      id="top"
-      className="mx-auto max-w-5xl px-5 pb-16 pt-20 sm:pb-24 sm:pt-28 2xl:max-w-6xl 3xl:max-w-7xl"
-    >
-      <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium uppercase tracking-wider text-[var(--color-muted)]">
-        <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-        Available for freelance work
-      </p>
+    <section id="top" className="relative overflow-hidden">
+      {/* Glow orbs */}
+      <div className="glow glow-gold" style={{ top: "-8rem", left: "-6rem", width: "32rem", height: "32rem" }} />
+      <div className="glow glow-gold-soft" style={{ top: "10rem", right: "-10rem", width: "34rem", height: "34rem" }} />
 
-      <h1 className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-        {name}
-        <span className="block text-[var(--color-muted)]">{tagline}</span>
-      </h1>
+      <div className="shell relative z-10 pb-16 pt-16 sm:pb-24 sm:pt-24">
+        <p className="eyebrow rise" style={{ animationDelay: "0.05s" }}>
+          <span className="dot dot-green" />
+          Available for work
+        </p>
 
-      <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
-        {intro}
-      </p>
+        <h1 className="display mt-6 max-w-4xl text-5xl sm:text-7xl 3xl:text-8xl">
+          <span className="rise block" style={{ animationDelay: "0.15s" }}>
+            Video that keeps
+          </span>
+          <span className="text-gold rise block" style={{ animationDelay: "0.28s" }}>
+            viewers locked in.
+          </span>
+        </h1>
 
-      <div className="mt-9 flex flex-wrap gap-3">
-        <a
-          href="#work"
-          className="rounded-full bg-[var(--color-ink)] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-85"
+        <p
+          className="rise mt-7 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] sm:text-xl"
+          style={{ animationDelay: "0.4s" }}
         >
-          View my work
-        </a>
-        <a
-          href="#contact"
-          className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-6 py-3 text-sm font-medium transition-colors hover:border-[var(--color-ink)]"
-        >
-          Get in touch
-        </a>
+          {intro}
+        </p>
+
+        <div className="rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: "0.52s" }}>
+          <a href="#contact" className="btn-gold">
+            Book A Call
+          </a>
+          <a href="#work" className="btn-ghost">
+            Watch My Work →
+          </a>
+        </div>
       </div>
     </section>
   );
