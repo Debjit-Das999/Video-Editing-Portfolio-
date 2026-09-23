@@ -21,7 +21,7 @@ export const content: SiteContent = {
     calendlyUrl: "https://calendly.com/debjitdas842/30min", // booking widget in the Contact section
 
     intro:
-      "I turn raw talking-head footage into sharp, watchable videos that keep viewers locked in and coming back — from interviews and YouTube videos to course lessons and personal-brand channels.",
+      "I turn raw talking-head footage into sharp, watchable videos that keep viewers locked in and coming back. From interviews and YouTube videos to course lessons and personal-brand channels.",
     bio: [
       "I genuinely care about helping business owners grow. My focus is getting your message in front of the exact people you want as customers, so the right audience finds you, trusts you, and wants to work with you.",
       "You already know your business better than anyone. My job is to make sure the people who are a perfect fit for what you offer actually see it, connect with it, and take the next step with you.",
